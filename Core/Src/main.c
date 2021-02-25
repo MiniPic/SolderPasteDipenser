@@ -30,6 +30,8 @@
 /* USER CODE BEGIN PTD */
 #define	FORWARD			0
 #define	REVERSE			1
+
+#define DELAY_BP		3000
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -66,6 +68,7 @@ static void MX_GPIO_Init(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
+	uint32_t tickcnt;
 
   /* USER CODE END 1 */
 
@@ -93,17 +96,44 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  tickcnt = HAL_GetTick();
   while (1)
   {
-
 	  if(!HAL_GPIO_ReadPin(BP_GPIO_Port, BP_Pin))
 	  {
-		  HAL_Delay(10);
+		  if(HAL_GetTick()-tickcnt < DELAY_BP)
+		  {
+			  HAL_Delay(10);
+			  HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_RESET);
+			  NewStep(FORWARD);
+			  HAL_Delay(10);
+			  HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_SET);
+			  NewStep(FORWARD);
+		  }
+		  else
+		  {
+			  HAL_Delay(1);
+			  HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_RESET);
+			  NewStep(FORWARD);
+			  HAL_Delay(1);
+			  HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_SET);
+			  NewStep(FORWARD);
+		  }
+	  }
+
+	  else if(!HAL_GPIO_ReadPin(BP_GPIO_Port, BP2_Pin))
+	  {
+		  HAL_Delay(1);
 		  HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_RESET);
 		  NewStep(REVERSE);
-		  HAL_Delay(10);
+		  HAL_Delay(1);
 		  HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_SET);
 		  NewStep(REVERSE);
+	  }
+
+	  else
+	  {
+		  tickcnt = HAL_GetTick();
 	  }
     /* USER CODE END WHILE */
 
@@ -182,11 +212,11 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : BP_Pin */
-  GPIO_InitStruct.Pin = BP_Pin;
+  /*Configure GPIO pins : BP_Pin BP2_Pin */
+  GPIO_InitStruct.Pin = BP_Pin|BP2_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
-  HAL_GPIO_Init(BP_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
 }
 

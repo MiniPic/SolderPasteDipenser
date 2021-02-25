@@ -70,6 +70,8 @@ void Error_Handler(void);
 #define OUT4_GPIO_Port GPIOB
 #define BP_Pin GPIO_PIN_7
 #define BP_GPIO_Port GPIOB
+#define BP2_Pin GPIO_PIN_9
+#define BP2_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */

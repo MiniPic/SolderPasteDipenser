@@ -40,8 +40,8 @@ SolderPaste.bin \
 all: SolderPaste.elf secondary-outputs
 
 # Tool invocations
-SolderPaste.elf: $(OBJS) $(USER_OBJS) C:\Users\Tour\STM32CubeIDE\workspace_1.1.0\SolderPaste\STM32F103C8TX_FLASH.ld
-	arm-none-eabi-gcc -o "SolderPaste.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"C:\Users\Tour\STM32CubeIDE\workspace_1.1.0\SolderPaste\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="SolderPaste.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+SolderPaste.elf: $(OBJS) $(USER_OBJS) C:\Users\Tour\Desktop\SolderPasteDipenser\STM32F103C8TX_FLASH.ld
+	arm-none-eabi-gcc -o "SolderPaste.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"C:\Users\Tour\Desktop\SolderPasteDipenser\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="SolderPaste.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
